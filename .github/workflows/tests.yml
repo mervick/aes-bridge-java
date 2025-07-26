@@ -27,5 +27,10 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
 
+      - name: Build & Test with Maven (Java 8)
+        if: matrix.java == 8
+        run: mvn -B clean verify -Djava.version=8 -Pjava-8 -X
+
       - name: Build and Test with Maven (${{ matrix.java }})
-        run: mvn -B clean verify -Djava.version=${{ matrix.java }} -X
+        if: matrix.java != 8
+        run: mvn -B clean verify -Djava.version=${{ matrix.java }}
