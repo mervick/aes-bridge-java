@@ -56,11 +56,15 @@ public class Example {
 }
 ```
 
-## API Reference
+---
+
+# API Reference
 
 ### Main Encryption/Decryption Methods
 
 `dev.mervick.aesbridge.AesBridge`  
+
+---
 
 #### `byte[] AesBridge.encrypt(byte[] plaintext, byte[] passphrase)`
 
@@ -72,6 +76,8 @@ Encrypts the given plaintext using AES-256-GCM mode (default) with the provided 
 - **Returns:** Encrypted data in raw binary format following the structure above.
 - **Throws:** Exceptions on encryption failure.
 
+---
+
 #### `byte[] AesBridge.decrypt(byte[] ciphertext, byte[] passphrase)`
 
 Decrypts data encrypted with `AesBridge.encrypt()` using AES-256-GCM.  
@@ -82,12 +88,11 @@ Decrypts data encrypted with `AesBridge.encrypt()` using AES-256-GCM.
 - **Returns:**  Decrypted plaintext as a byte array.
 - **Throws:** Exceptions on decryption or authentication failure.
 
+---
+
 #### `byte[] AesBridge.encrypt(byte[] plaintext, byte[] passphrase, String mode)`
 
-Encrypts data with the specified AES mode. Supported modes:
-- `"GCM"` — AES-GCM 256-bit encryption.
-- `"CBC"` — AES-CBC 256-bit encryption with HMAC-SHA256 authentication.
-- `"LEGACY"` — Legacy AES-CBC encryption compatible with OpenSSL `enc` command.
+Encrypts data with the specified AES mode. 
 
 - **Parameters:**  
   - `plaintext` — data to encrypt (byte array)  
@@ -96,7 +101,14 @@ Encrypts data with the specified AES mode. Supported modes:
 - **Returns:** Encrypted data as a byte array.
 - **Throws:**  Exceptions on encryption failure or invalid mode.
 
+Supported modes:
+- `"GCM"` — AES-GCM 256-bit encryption.
+- `"CBC"` — AES-CBC 256-bit encryption with HMAC-SHA256 authentication.
+- `"LEGACY"` — Legacy AES-CBC encryption compatible with OpenSSL `enc` command.
+
 #### `byte[] AesBridge.decrypt(byte[] ciphertext, byte[] passphrase, String mode)`
+
+---
 
 Decrypts data using the specified AES mode. Input format must match the output format of the corresponding `encrypt` method.
 
@@ -107,13 +119,17 @@ Decrypts data using the specified AES mode. Input format must match the output f
 - **Returns:** Decrypted plaintext as a byte array.
 - **Throws:** Exceptions on decryption failure, authentication failure, or invalid mode.
 
-### Mode-Specific Encryption Methods
+---
 
+
+## Mode-Specific Encryption Methods
 
 ### GCM Mode API
 
 `dev.mervick.aesbridge.GCM`  
 The GCM mode is the recommended AES encryption mode providing authenticated encryption with associated data using AES-256-GCM.  
+
+---
 
 
 #### `public static byte[] GCM.encrypt(Object plaintext, Object passphrase)`
@@ -127,6 +143,8 @@ Encrypts the given plaintext with AES-256-GCM and returns Base64 encoded data. T
 - **Returns:** Base64-encoded byte array containing the encrypted data.
 - **Throws:** `Exception` on encryption errors.
 
+---
+
 #### `public static byte[] GCM.decrypt(Object ciphertext, Object passphrase)`
 
 Decrypts Base64-encoded data encrypted with `encrypt()`. Checks authenticity using GCM's built-in tag.
@@ -136,6 +154,8 @@ Decrypts Base64-encoded data encrypted with `encrypt()`. Checks authenticity usi
   - `passphrase` — Passphrase for decryption.  
 - **Returns:** Decrypted plaintext bytes.
 - **Throws:** `Exception` on decryption or authentication failures.
+
+---
 
 #### `public static byte[] GCM.encryptBin(Object plaintext, Object passphrase)`
 
@@ -147,6 +167,8 @@ Encrypts data using AES-GCM and returns raw binary output without Base64 encodin
 - **Returns:** Raw binary encrypted data: `salt(16) + nonce(12) + ciphertext + tag(16)`
 - **Throws:** `Exception` on encryption errors.
 
+---
+
 #### `public static byte[] GCM.decryptBin(Object ciphertext, Object passphrase)`
 
 Decrypts raw binary encrypted data produced by `encryptBin()`. Verifies authentication tag.
@@ -157,11 +179,15 @@ Decrypts raw binary encrypted data produced by `encryptBin()`. Verifies authenti
 - **Returns:** Decrypted plaintext bytes.
 - **Throws:**  `Exception` on decryption or authentication errors.
 
+---
+
 
 ### CBC Mode API
 
 `dev.mervick.aesbridge.CBC`  
 The CBC mode in AesBridge provides AES-256-CBC encryption combined with HMAC-SHA256 authentication for data integrity, with PBKDF2 key derivation.
+
+---
 
 #### `public static byte[] CBC.encrypt(Object plaintext, Object passphrase)`
 
@@ -174,6 +200,8 @@ Encrypts the given plaintext using AES-256-CBC with PKCS5 padding and calculates
 - **Returns:** Byte array containing the Base64-encoded encrypted result.
 - **Throws:** `Exception` on encryption errors.
 
+---
+
 #### `public static byte[] CBC.decrypt(Object ciphertext, Object passphrase)`
 
 Decrypts data previously encrypted with `encrypt()`. Verifies the HMAC tag to ensure data integrity and authenticity. Input must be Base64-encoded and must follow the format described above.
@@ -183,6 +211,8 @@ Decrypts data previously encrypted with `encrypt()`. Verifies the HMAC tag to en
   - `passphrase` — The secret passphrase used for decryption.  
 - **Returns:** Byte array of the decrypted plaintext data.
 - **Throws:** `SecurityException` if HMAC verification fails, or other exceptions on decryption errors.
+
+---
 
 #### `public static byte[] CBC.encryptBin(Object plaintext, Object passphrase)`
 
@@ -194,6 +224,8 @@ Encrypts the given data using AES-256-CBC with HMAC-SHA256, returning raw binary
 - **Returns:** Raw binary encrypted data: `salt(16) + iv(16) + ciphertext + HMAC(32)`
 - **Throws:** `Exception` on encryption errors.
 
+---
+
 #### `public static byte[] CBC.decryptBin(Object ciphertext, Object passphrase)`
 
 Decrypts raw binary encrypted data generated by `encryptBin()`. Verifies HMAC before decryption.
@@ -204,12 +236,16 @@ Decrypts raw binary encrypted data generated by `encryptBin()`. Verifies HMAC be
 - **Returns:** Raw decrypted data.
 - **Throws:** `SecurityException` if HMAC validation fails, or other exceptions on error.
 
+---
+
 
 ### Legacy Mode API
 
 `dev.mervick.aesbridge.Legacy`  
 
 > ⚠️ These functions are maintained solely for **backward compatibility** with older systems. While they remain fully compatible with the legacy **AES Everywhere** implementation, their use is strongly discouraged in new applications due to potential security limitations compared to GCM or CBC with HMAC.
+
+---
 
 #### `public static byte[] Legacy.encrypt(Object data, Object passphrase)`
 
@@ -221,6 +257,8 @@ Encrypts data using OpenSSL-compatible legacy AES-256-CBC with an ASCII `"Salted
 - **Returns:** Base64-encoded byte array containing encrypted data.
 - **Throws:** `Exception` on encryption errors.
 
+---
+
 #### `public static byte[] Legacy.decrypt(Object data, Object passphrase)`
 
 Decrypts Base64-encoded data encrypted with the legacy `encrypt()`. Expects the `"Salted__"` header in input.
@@ -230,6 +268,8 @@ Decrypts Base64-encoded data encrypted with the legacy `encrypt()`. Expects the 
   - `passphrase` — Passphrase used for encryption.  
 - **Returns:** Decrypted plaintext bytes.
 - **Throws:** `IllegalArgumentException` if input format is incorrect, and other exceptions on decryption errors.
+
+---
 
 
 ## Modes Details
