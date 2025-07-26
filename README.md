@@ -106,9 +106,9 @@ Supported modes:
 - `"CBC"` — AES-CBC 256-bit encryption with HMAC-SHA256 authentication.
 - `"LEGACY"` — Legacy AES-CBC encryption compatible with OpenSSL `enc` command.
 
-#### `byte[] AesBridge.decrypt(byte[] ciphertext, byte[] passphrase, String mode)`
-
 ---
+
+#### `byte[] AesBridge.decrypt(byte[] ciphertext, byte[] passphrase, String mode)`
 
 Decrypts data using the specified AES mode. Input format must match the output format of the corresponding `encrypt` method.
 
