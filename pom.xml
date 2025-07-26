@@ -10,11 +10,44 @@
   <name>aesbridge</name>
   <url>https://github.com/mervick/aes-bridge-java</url>
 
+  <!-- <properties> -->
+    <!-- <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+    <!-- <maven.compiler.release>${java.version}</maven.compiler.release> -->
+    <!-- <maven.compiler.release>8</maven.compiler.release> -->
+  <!-- </properties> -->
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- <maven.compiler.release>${java.version}</maven.compiler.release> -->
-    <maven.compiler.release>8</maven.compiler.release>
+    <java.version>11</java.version>
   </properties>
+
+  <!-- <build> -->
+  <!-- </build> -->
+
+  <profiles>
+      <profile>
+          <id>java-8</id>
+          <activation>
+              <property>
+                  <name>java.version</name>
+                  <value>8</value>
+              </property>
+          </activation>
+          <build>
+              <plugins>
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-compiler-plugin</artifactId>
+                      <version>3.13.0</version>
+                      <configuration>
+                          <source>1.8</source>
+                          <target>1.8</target>
+                      </configuration>
+                  </plugin>
+              </plugins>
+          </build>
+      </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
@@ -32,6 +65,16 @@
   </dependencies>
 
   <build>
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+          <configuration>
+              <release>${java.version}</release>
+          </configuration>
+        </plugin>
+    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
