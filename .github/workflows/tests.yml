@@ -28,4 +28,4 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build and Test with Maven (${{ matrix.java }})
-        run: mvn -B clean verify -Djava.version=${{ matrix.java }}
+        run: mvn -B clean verify -Djava.version=${{ matrix.java }} -X
