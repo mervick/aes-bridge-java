@@ -24,11 +24,7 @@ class AesBridgeTest {
 
     @BeforeAll
     static void loadTestData() throws Exception {
-        InputStream is = AesBridgeTest.class.getResourceAsStream("/test_data.json");
-        if (is == null) {
-            throw new FileNotFoundException("Resource file /test_data.json not found");
-        }
-        String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+        String json = readTestData();
         testData = new JSONObject(json).getJSONObject("testdata");
     }
 
@@ -203,12 +199,24 @@ class AesBridgeTest {
         return decryptProvider("encrypted-legacy");
     }
 
-    static Stream<Arguments> decryptProvider(String field) throws IOException {
+    private static String readTestData() throws IOException {
         InputStream is = AesBridgeTest.class.getResourceAsStream("/test_data.json");
         if (is == null) {
             throw new FileNotFoundException("Resource file /test_data.json not found");
         }
-        String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+            String json = sb.toString();
+            return json;
+        }
+    }
+
+    static Stream<Arguments> decryptProvider(String field) throws IOException {
+        String json = readTestData();
         JSONArray arr = new JSONObject(json).getJSONArray("decrypt");
 
         return IntStream.range(0, arr.length())
