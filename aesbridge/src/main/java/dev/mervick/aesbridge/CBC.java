@@ -142,4 +142,16 @@ public class CBC {
         byte[] data = Base64.getDecoder().decode(Utils.toBytes(ciphertext));
         return decryptBin(data, passphrase);
     }
+
+    public static void main(String[] args) {
+        try {
+            byte[] data = "Hello, world!".getBytes(StandardCharsets.UTF_8);
+            byte[] enc = encrypt(data, "my-secret-passphrase".getBytes(StandardCharsets.UTF_8));
+            byte[] dec = decrypt(enc, "my-secret-passphrase".getBytes(StandardCharsets.UTF_8));
+            System.out.println("Encrypted: " + new String(enc, StandardCharsets.UTF_8));
+            System.out.println("Decrypted: " + new String(dec, StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
