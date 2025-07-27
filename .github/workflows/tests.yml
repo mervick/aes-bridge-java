@@ -30,8 +30,8 @@ jobs:
       - name: Build and Test with Maven (Java ${{ matrix.java }})
         run: |
           if [ ${{ matrix.java }} == 8 ]; then
-            mvn -B clean verify -Djava.version=8 -Pjava-8 -X
+            mvn -f aesbridge/pom.xml -B clean verify -Djava.version=8 -Pjava-8
           else
-            mvn -B clean verify -Djava.version=${{ matrix.java }}
+            mvn -f aesbridge/pom.xml -B clean verify -Djava.version=${{ matrix.java }}
           fi
 
