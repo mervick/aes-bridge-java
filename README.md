@@ -127,6 +127,7 @@ Decrypts data using the specified AES mode. Input format must match the output f
 ### GCM Mode API
 
 `dev.mervick.aesbridge.GCM`  
+
 The GCM mode is the recommended AES encryption mode providing authenticated encryption with associated data using AES-256-GCM.  
 
 ---
@@ -185,6 +186,7 @@ Decrypts raw binary encrypted data produced by `encryptBin()`. Verifies authenti
 ### CBC Mode API
 
 `dev.mervick.aesbridge.CBC`  
+
 The CBC mode in AesBridge provides AES-256-CBC encryption combined with HMAC-SHA256 authentication for data integrity, with PBKDF2 key derivation.
 
 ---
