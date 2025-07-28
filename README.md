@@ -18,6 +18,19 @@ This is the **Java implementation** of the core project.
 
 ## Usage
 
+Open your project's `pom.xml` file and add the following `dependency` the `<dependencies>` section. If the section doesn't exist, create it within the `<project>` root element.   
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>dev.mervick.aesbridge</groupId>
+    <artifactId>aes-bridge</artifactId>
+    <version>2.0.0</version>
+  </dependency>
+</dependencies>
+```
+
+
 The main class `AesBridge` exposes convenient static methods to encrypt and decrypt data:
 
 ```java
@@ -36,21 +49,23 @@ public class Example {
 
         // Encrypt using the default GCM mode
         byte[] encrypted = AesBridge.encrypt(plaintext, passBytes);
+        System.out.println("Encrypted GCM: " + new String(encrypted, "UTF-8"));
         // Decrypt using the default GCM mode
         byte[] decrypted = AesBridge.decrypt(encrypted, passBytes);
-        System.out.println("Decrypted: " + new String(decrypted, "UTF-8"));
+        System.out.println("Decrypted GCM: " + new String(decrypted, "UTF-8"));
 
         // Encrypt using CBC mode
         byte[] encryptedCBC = AesBridge.encrypt(plaintext, passBytes, "CBC");
+        System.out.println("Encrypted CBC: " + new String(encryptedCBC, "UTF-8"));
         // Decrypt using CBC mode
         byte[] decryptedCBC = AesBridge.decrypt(encryptedCBC, passBytes, "CBC");
         System.out.println("Decrypted CBC: " + new String(decryptedCBC, "UTF-8"));
 
         // Encrypt using legacy OpenSSL-compatible mode
         byte[] encryptedLegacy = AesBridge.encrypt(plaintext, passBytes, "LEGACY");
+        System.out.println("Encrypted Legacy: " + new String(encryptedLegacy, "UTF-8"));
         // Decrypt using legacy mode
         byte[] decryptedLegacy = AesBridge.decrypt(encryptedLegacy, passBytes, "LEGACY");
-
         System.out.println("Decrypted Legacy: " + new String(decryptedLegacy, "UTF-8"));
     }
 }
