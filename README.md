@@ -1,6 +1,7 @@
 # AesBridge Java
 
-![CI Status](https://github.com/mervick/aes-bridge-java/actions/workflows/tests.yml/badge.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.mervick.aesbridge/aes-bridge.svg)](https://central.sonatype.com/artifact/dev.mervick.aesbridge/aes-bridge)
+[![CI Status](https://github.com/mervick/aes-bridge-java/actions/workflows/tests.yml/badge.svg)](https://github.com/mervick/aes-bridge-java/actions/workflows/tests.yml)
 
 **AesBridge** is a modern, secure, and cross-language **AES** encryption library. It offers a unified interface for encrypting and decrypting data across multiple programming languages. Supports **GCM**, **CBC**, and **legacy AES Everywhere** modes.
 
